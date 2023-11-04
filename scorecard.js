@@ -11,23 +11,34 @@ class Bowling {
     viewScoreCard(){
         console.log(this.rolls)
     }
-    addFrame(FirstRoll, SecondRoll) {
-        this.rolls.push(FirstRoll,SecondRoll);
+    addFrame(FirstRoll, SecondRoll=0) {
+        if (FirstRoll===10) {
+            this.rolls.push(FirstRoll)
+        }
+        // If First in frame and not 10 - Add to score and move to second roll of frame
+        else { this.rolls.push(FirstRoll,SecondRoll)}
         // this.rolls.push(SecondRoll);
         this.Frames+=1
     }
     calculateScore(){
+        this.score = 0
         let totalRolls=this.rolls.length;
         let FirstRollinFrame=true;
-        for (let i = 0; i < totalRolls-3; i++) { 
-
+        for (let i = 0; i < totalRolls; i++) { 
+            console.log(    this.rolls[i]                    );
+            // Need to Define a Strike - I
+            // 
             // If First in frame and 10 - Move to next Frame and add the sum of the next two rolls
+            if (FirstRollinFrame===true && this.rolls[i]=== 10) {console.log('Strike!');this.score+=(this.rolls[i]+this.rolls[i+1]+this.rolls[i+2]);}
             // If First in frame and not 10 - Add to score and move to second roll of frame
+            else if (FirstRollinFrame===true && this.rolls[i]!== 10) {console.log('First Roll in a Frame! No Strike!');this.score+=this.rolls[i]; FirstRollinFrame=false}
 
             // If Second in Frame and frame total is 10 - Move to new Frame and add result of next roll
+            else if (FirstRollinFrame===false && this.rolls[i]+[i-1]=== 10) {console.log('Spare!');this.score+=this.rolls[i]+this.rolls[i+1]; FirstRollinFrame=false}
             //If Second in frame and frame total is not 10 - Add to score and move to new frame
+            else if (FirstRollinFrame===false && (this.rolls[i]+this.rolls[i-1]!== 10)) {console.log('No Spare!');this.score+=this.rolls[i]; FirstRollinFrame=true};
+
             
-            console.log(    this.rolls[i]                    );
 
             // This is iterating through the numbers 1-20 which we will use for the index numbers
             
@@ -42,17 +53,20 @@ class Bowling {
 
 
 
-let scorecard = new Bowling();
+let bowl = new Bowling();
+console.log(`-=-=-=-=-=-=-= Frame ${(bowl.Frames)+1} =-=-=-=-=-=-=-=-=-==-=-=-=-`)
+bowl.addFrame(1,5)
+bowl.calculateScore()
+console.log(`The Rolls are currently: ${bowl.rolls}`);
+console.log(`The Score is ${bowl.score}`);
 
-scorecard.addFrame(1,2) // Frame 1
-scorecard.addFrame(3,4) // Frame 2
-scorecard.addFrame(5,6)  // Frame 3
-scorecard.addFrame(7,8) // Frame 4
-scorecard.addFrame(9,10) // Frame 5
-scorecard.addFrame(11,12) // Frame 6
-scorecard.addFrame(13,14) // Frame 7
-scorecard.addFrame(15,16) // Frame 8
-scorecard.addFrame(17,18) // Frame 9
-scorecard.addFrame(19,20) // Frame 10
+console.log(`-=-=-=-=-=-=-= Frame ${(bowl.Frames)+1} =-=-=-=-=-=-=-=-=-==-=-=-=-`)
+bowl.addFrame(2,7)
+bowl.calculateScore()
+console.log(`The Rolls are currently: ${bowl.rolls}`);
+console.log(`The Score is ${bowl.score}`);
 
-scorecard.calculateScore()
+// bowl.addFrame(10)
+// bowl.calculateScore()
+// console.log(`The Rolls are currently: ${bowl.rolls}`);
+// console.log(`The Score is ${bowl.score}`);
